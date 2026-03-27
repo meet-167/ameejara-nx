@@ -23,7 +23,7 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
-    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -31,6 +31,8 @@ body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     overflow-x: hidden;
+    width: 100%;
+    position: relative;
     line-height: 1.6;
 }
 
@@ -82,7 +84,7 @@ a {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     z-index: -1;
     pointer-events: none;
@@ -574,8 +576,17 @@ section {
     .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
     .menu-toggle.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-    .hero-buttons { flex-direction: column; }
-    .footer-content { grid-template-columns: 1fr; }
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    .hero-buttons { flex-direction: column; width: 100%; }
+    .hero-buttons .btn { width: 100%; text-align: center; }
+
+    .stats-grid { grid-template-columns: 1fr; }
+    
+    .footer { margin: 2rem 1rem 1rem; padding: 2rem 1rem 1rem; }
+    .footer-content { grid-template-columns: 1fr; gap: 2rem; }
     
     .section-title { font-size: 2.2rem; }
     .about { margin: 2rem 1rem; padding: 2rem 1rem; }
