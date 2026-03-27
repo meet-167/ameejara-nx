@@ -30,7 +30,7 @@ window.addEventListener('scroll', () => {
 const observerOptions = {
     root: null,
     rootMargin: '0px',
-    threshold: 0.15
+    threshold: 0.05
 };
 
 const observer = new IntersectionObserver((entries, observer) => {
@@ -45,6 +45,12 @@ const observer = new IntersectionObserver((entries, observer) => {
 document.querySelectorAll('.fade-in-section').forEach(section => {
     observer.observe(section);
 });
+
+// Polyfill/safe-fallback: Force immediate visibility of hero to prevent blank screen at start
+setTimeout(() => {
+    const hero = document.getElementById('hero');
+    if (hero) hero.classList.add('is-visible');
+}, 100);
 
 // --- THREE.JS BACKGROUND ---
 
@@ -128,11 +134,16 @@ window.addEventListener('scroll', () => {
 });
 
 // Resize Event
+let currentWidth = window.innerWidth;
 window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Only resize if width changes (ignores mobile vertical resize when address bar hides)
+    if (window.innerWidth !== currentWidth) {
+        currentWidth = window.innerWidth;
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    }
 });
 
 // Animation Loop
